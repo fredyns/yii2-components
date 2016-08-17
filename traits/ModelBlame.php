@@ -5,12 +5,12 @@ namespace fredyns\components\traits;
 /**
  * Add blaming for model
  *
- * @property User $createdBy
- * @property User $updatedBy
- * @property User $deletedBy
- * @property User $createdByProfile
- * @property User $updatedByProfile
- * @property User $deletedByProfile
+ * @property app\models\User $createdByUser
+ * @property app\models\User $updatedByUser
+ * @property app\models\User $deletedByUser
+ * @property app\models\Profile $createdByProfile
+ * @property app\models\Profile $updatedByProfile
+ * @property app\models\Profile $deletedByProfile
  *
  * @author fredy
  */
@@ -19,15 +19,15 @@ trait ModelBlame
 
     public function modelUser()
     {
-        $options = [
-            'dektrium\user\models\User',
-            'app\models\User',
-            'frontend\models\User',
-            'backend\models\User',
-            'common\models\User',
+        $alternatives = [
+            'dektrium' => 'dektrium\user\models\User',
+            'app'      => 'app\models\User',
+            'frontend' => 'frontend\models\User',
+            'backend'  => 'backend\models\User',
+            'common'   => 'common\models\User',
         ];
 
-        foreach ($options as $value)
+        foreach ($alternatives as $value)
         {
             if (class_exists($value))
             {
@@ -35,20 +35,20 @@ trait ModelBlame
             }
         }
 
-        return 'app\models\User';
+        return null;
     }
 
     public function modelProfile()
     {
-        $options = [
-            'dektrium\user\models\Profile',
-            'app\models\Profile',
-            'frontend\models\Profile',
-            'backend\models\Profile',
-            'common\models\Profile',
+        $alternatives = [
+            'dektrium' => 'dektrium\user\models\Profile',
+            'app'      => 'app\models\Profile',
+            'frontend' => 'frontend\models\Profile',
+            'backend'  => 'backend\models\Profile',
+            'common'   => 'common\models\Profile',
         ];
 
-        foreach ($options as $value)
+        foreach ($alternatives as $value)
         {
             if (class_exists($value))
             {
@@ -56,7 +56,7 @@ trait ModelBlame
             }
         }
 
-        return 'app\models\User';
+        return null;
     }
     /* ======================== global blaming ======================== */
 
@@ -67,9 +67,11 @@ trait ModelBlame
      */
     public function getBlamedUser($attribute)
     {
-        if ($this->hasAttribute($attribute))
+        $modelName = $this->modelUser();
+
+        if ($this->hasAttribute($attribute) && $modelName)
         {
-            return $this->hasOne($this->modelUser(), ['id' => $attribute]);
+            return $this->hasOne($modelName, ['id' => $attribute]);
         }
 
         return NULL;
@@ -82,9 +84,11 @@ trait ModelBlame
      */
     public function getBlamedProfile($attribute)
     {
-        if ($this->hasAttribute($attribute))
+        $modelName = $this->modelProfile();
+
+        if ($this->hasAttribute($attribute) && $modelName)
         {
-            return $this->hasOne($this->modelProfile(), ['user_id' => $attribute]);
+            return $this->hasOne($modelName, ['user_id' => $attribute]);
         }
 
         return NULL;
@@ -92,37 +96,7 @@ trait ModelBlame
     /* ======================== model blaming ======================== */
 
     /**
-     * Getting blamable user model based for creating model
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCreatedBy()
-    {
-        return $this->getBlamedUser('createdBy_id');
-    }
-
-    /**
-     * Getting blamable user model based for updating model
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUpdatedBy()
-    {
-        return $this->getBlamedUser('updatedBy_id');
-    }
-
-    /**
-     * Getting blamable user model based for deleting model
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDeletedBy()
-    {
-        return $this->getBlamedUser('deletedBy_id');
-    }
-
-    /**
-     * Getting blamable profile model based for creating model
+     * Getting blamable Profile model based for creating model
      *
      * @return \yii\db\ActiveQuery
      */
@@ -132,7 +106,7 @@ trait ModelBlame
     }
 
     /**
-     * Getting blamable profile model based for updating model
+     * Getting blamable Profile model based for updating model
      *
      * @return \yii\db\ActiveQuery
      */
@@ -142,13 +116,43 @@ trait ModelBlame
     }
 
     /**
-     * Getting blamable profile model based for deleting model
+     * Getting blamable Profile model based for deleting model
      *
      * @return \yii\db\ActiveQuery
      */
     public function getDeletedByProfile()
     {
         return $this->getBlamedProfile('deletedBy_id');
+    }
+
+    /**
+     * Getting blamable User model based for creating model
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedByUser()
+    {
+        return $this->getBlamedUser('createdBy_id');
+    }
+
+    /**
+     * Getting blamable User model based for updating model
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedByUser()
+    {
+        return $this->getBlamedUser('updatedBy_id');
+    }
+
+    /**
+     * Getting blamable User model based for deleting model
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeletedByUser()
+    {
+        return $this->getBlamedUser('deletedBy_id');
     }
 
 }
