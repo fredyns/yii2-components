@@ -20,8 +20,8 @@ trait ModelBlame
     public function modelUser()
     {
         $alternatives = [
-            'dektrium' => 'dektrium\user\models\User',
             'app'      => 'app\models\User',
+            'dektrium' => 'dektrium\user\models\User',
             'frontend' => 'frontend\models\User',
             'backend'  => 'backend\models\User',
             'common'   => 'common\models\User',
@@ -41,8 +41,8 @@ trait ModelBlame
     public function modelProfile()
     {
         $alternatives = [
-            'dektrium' => 'dektrium\user\models\Profile',
             'app'      => 'app\models\Profile',
+            'dektrium' => 'dektrium\user\models\Profile',
             'frontend' => 'frontend\models\Profile',
             'backend'  => 'backend\models\Profile',
             'common'   => 'common\models\Profile',
