@@ -36,6 +36,19 @@ trait ModelSoftDelete
     }
 
     /**
+     * @inheritdoc
+     */
+    public function delete()
+    {
+        if ($this->isSoftDeleteEnabled)
+        {
+            return $this->softDelete();
+        }
+
+        return $this->hardDelete();
+    }
+
+    /**
      * prefering soft-delete instead of deleting permanently
      * adding delete time & blamable user
      *
@@ -43,11 +56,6 @@ trait ModelSoftDelete
      */
     public function softDelete()
     {
-        if ($this->isSoftDeleteEnabled == FALSE)
-        {
-            return $this->hardDelete();
-        }
-
         $this->setAttribute('recordStatus', $this->recordStatus_deleted());
         $this->setAttribute('deleted_at', time());
         $this->setAttribute('deletedBy_id', Yii::$app->user->getId());
