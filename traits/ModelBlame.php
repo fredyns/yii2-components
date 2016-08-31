@@ -102,7 +102,7 @@ trait ModelBlame
      */
     public function getCreatedByProfile()
     {
-        return $this->getBlamedProfile('createdBy_id');
+        return $this->getBlamedProfile('created_by');
     }
 
     /**
@@ -112,7 +112,7 @@ trait ModelBlame
      */
     public function getUpdatedByProfile()
     {
-        return $this->getBlamedProfile('updatedBy_id');
+        return $this->getBlamedProfile('updated_by');
     }
 
     /**
@@ -122,7 +122,7 @@ trait ModelBlame
      */
     public function getDeletedByProfile()
     {
-        return $this->getBlamedProfile('deletedBy_id');
+        return $this->getBlamedProfile('deleted_by');
     }
 
     /**
@@ -132,7 +132,7 @@ trait ModelBlame
      */
     public function getCreatedByUser()
     {
-        return $this->getBlamedUser('createdBy_id');
+        return $this->getBlamedUser('created_by');
     }
 
     /**
@@ -142,7 +142,7 @@ trait ModelBlame
      */
     public function getUpdatedByUser()
     {
-        return $this->getBlamedUser('updatedBy_id');
+        return $this->getBlamedUser('updated_by');
     }
 
     /**
@@ -152,7 +152,7 @@ trait ModelBlame
      */
     public function getDeletedByUser()
     {
-        return $this->getBlamedUser('deletedBy_id');
+        return $this->getBlamedUser('deleted_by');
     }
 
 }
