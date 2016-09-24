@@ -96,4 +96,32 @@ END;
         }
     }
 
+    /**
+     * plain text filter
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function plaintextFilter($string)
+    {
+        $string = static::utf8($string);
+        $string = static::stripSpaces($string);
+
+        return $string;
+    }
+
+    /**
+     * html text filter
+     *
+     * @param string $string
+     * @return string
+     */
+    public static function htmlFilter($string)
+    {
+        $string = static::plaintextFilter($string);
+        $string = static::stripJavascript($string);
+
+        return $string;
+    }
+
 }
