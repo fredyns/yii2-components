@@ -20,8 +20,9 @@ class IndentedText extends \yii\base\Widget
     public $spacePerIndent = 4;
     public $newline        = "\n";
     // variables
-    public $indentLevel    = 1;
+    public $indentLevel    = 0;
     public $data           = [];
+    public $startnewline   = false;
 
     public function getIndentChar()
     {
@@ -88,7 +89,7 @@ class IndentedText extends \yii\base\Widget
 
     public function getText()
     {
-        $text = $this->indentLevel == 1 ? $this->newline : '';
+        $text = $this->startnewline ? $this->newline : '';
 
         foreach ($this->data as $lineIndex => $lineData)
         {
