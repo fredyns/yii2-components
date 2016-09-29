@@ -17,11 +17,10 @@ namespace fredyns\components\traits;
 trait ModelBlame
 {
 
-    public function modelUser()
+    public function yiiModelUser()
     {
         $alternatives = [
             'app'      => 'app\models\User',
-            'dektrium' => 'dektrium\user\models\User',
             'frontend' => 'frontend\models\User',
             'backend'  => 'backend\models\User',
             'common'   => 'common\models\User',
@@ -38,11 +37,28 @@ trait ModelBlame
         return null;
     }
 
-    public function modelProfile()
+    public function modelUser()
+    {
+        $dektriumUserClass = 'dektrium\user\models\User';
+        $yiiUserClass      = $this->yiiModelUser();
+
+        if (class_exists($dektriumUserClass))
+        {
+            if ($yiiUserClass && is_subclass_of($yiiUserClass, $dektriumUserClass))
+            {
+                return $yiiUserClass;
+            }
+
+            return $dektriumUserClass;
+        }
+
+        return $yiiUserClass;
+    }
+
+    public function yiiModelProfile()
     {
         $alternatives = [
             'app'      => 'app\models\Profile',
-            'dektrium' => 'dektrium\user\models\Profile',
             'frontend' => 'frontend\models\Profile',
             'backend'  => 'backend\models\Profile',
             'common'   => 'common\models\Profile',
@@ -57,6 +73,24 @@ trait ModelBlame
         }
 
         return null;
+    }
+
+    public function modelProfile()
+    {
+        $dektriumProfileClass = 'dektrium\user\models\Profile';
+        $yiiProfileClass      = $this->yiiModelProfile();
+
+        if (class_exists($dektriumProfileClass))
+        {
+            if ($yiiProfileClass && is_subclass_of($yiiProfileClass, $dektriumProfileClass))
+            {
+                return $yiiProfileClass;
+            }
+
+            return $dektriumProfileClass;
+        }
+
+        return $yiiProfileClass;
     }
     /* ======================== global blaming ======================== */
 
