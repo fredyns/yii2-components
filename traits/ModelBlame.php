@@ -134,6 +134,36 @@ trait ModelBlame
      *
      * @return \yii\db\ActiveQuery
      */
+    public function getCreatedBy()
+    {
+        return $this->getBlamedProfile('created_by');
+    }
+
+    /**
+     * Getting blamable Profile model based for updating model
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->getBlamedProfile('updated_by');
+    }
+
+    /**
+     * Getting blamable Profile model based for deleting model
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeletedBy()
+    {
+        return $this->getBlamedProfile('deleted_by');
+    }
+
+    /**
+     * Getting blamable Profile model based for creating model
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getCreatedByProfile()
     {
         return $this->getBlamedProfile('created_by');
