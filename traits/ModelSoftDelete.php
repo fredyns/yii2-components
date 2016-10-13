@@ -58,7 +58,7 @@ trait ModelSoftDelete
     {
         $this->setAttribute('recordStatus', $this->recordStatus_deleted());
         $this->setAttribute('deleted_at', time());
-        $this->setAttribute('deletedBy_id', Yii::$app->user->getId());
+        $this->setAttribute('deleted_by', Yii::$app->user->getId());
 
         return parent::update(FALSE);
     }
@@ -77,7 +77,7 @@ trait ModelSoftDelete
 
         $this->setAttribute('recordStatus', $this->recordStatus_active());
         $this->setAttribute('deleted_at', NULL);
-        $this->setAttribute('deletedBy_id', NULL);
+        $this->setAttribute('deleted_by', NULL);
 
         return $this->update(FALSE);
     }
