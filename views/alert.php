@@ -4,6 +4,12 @@
  */
 $alertTypes = ['success', 'info', 'warning', 'danger', 'error' => 'danger'];
 
+echo <<<HTML
+    <div class="row">
+        <div class="col-xs-12">
+\n
+HTML;
+
 foreach ($alertTypes as $name => $cssClass)
 {
     if (is_integer($name))
@@ -40,3 +46,9 @@ foreach ($alertTypes as $name => $cssClass)
     </div>\n
 HTML;
 }
+
+echo <<<HTML
+        </div>
+    </div>
+\n
+HTML;
